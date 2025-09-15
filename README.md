@@ -1,5 +1,56 @@
 # Case de engenharia Itau - .NodeJS
 
+## Pré Requisitos 
+### Verificar versão do Node.js (deve ser 14.x ou superior)
+node --version
+
+### Verificar se o Git está instalado
+git --version
+
+## Rodar o projeto
+
+cd nodeAPIcase
+
+## Instalar dependências do backend
+npm install
+
+## Iniciar o servidor backend
+node server.js
+
+(O backend estará rodando em http://localhost:8080)
+
+
+## Em outro terminal, navegar até a pasta do frontend
+cd frontend
+
+## Instalar dependências do frontend
+npm install
+
+## Iniciar o servidor de desenvolvimento do Angular
+npm start
+
+(O frontend estará rodando em http://localhost:4200)
+
+## Testes
+
+npm install axios --save-dev
+
+cd tests
+
+(RODAR
+curl -X POST http://localhost:8080/clientes -H "Content-Type: application/json" -d '{
+  "nome": "Cliente Teste",
+  "email": "teste@example.com",
+  "saldo": 5000
+}'
+)
+
+npm test
+
+
+
+-------------------------------------------------------------------
+
 ## Introdução
 Neste projeto esta sendo utilizada a base de dados sqlite com a seguinte tabela:
 
