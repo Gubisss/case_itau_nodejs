@@ -30,12 +30,20 @@ export class ClienteService {
   deletarCliente(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/clientes/${id}`);
   }
+  
+  // Método privado para gerar a idempotency-key
+  private generateIdempotencyKey(): string {
+    // Retorna a data atual + um número aleatório como string base36 para ser único
+    return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
+  }
 
   realizarDeposito(id: number, operacao: OperacaoFinanceira): Observable<any> {
-    return this.http.post(`${this.apiUrl}/clientes/${id}/depositar`, operacao);
+    const headers = { 'Idempotency-Key': this.generateIdempotencyKey() };
+    return this.http.post(`${this.apiUrl}/clientes/${id}/depositar`, operacao, { headers });
   }
 
   realizarSaque(id: number, operacao: OperacaoFinanceira): Observable<any> {
-    return this.http.post(`${this.apiUrl}/clientes/${id}/sacar`, operacao);
+    const headers = { 'Idempotency-Key': this.generateIdempotencyKey() };
+    return this.http.post(`${this.apiUrl}/clientes/${id}/sacar`, operacao, { headers });
   }
 }

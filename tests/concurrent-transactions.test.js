@@ -23,9 +23,11 @@ async function runTest() {
         console.log('\n🚀 Iniciando requisições simultâneas...\n');
 
         // 2. Criar requisições de saque simultâneas
-        const requests = Array(CONCURRENT_REQUESTS).fill().map(() => 
+        const requests = Array(CONCURRENT_REQUESTS).fill().map((_,index) => 
             axios.post(`${API_BASE_URL}/clientes/${CLIENT_ID}/sacar`, {
                 valor: DEBIT_AMOUNT
+            }, {
+                headers: { 'idempotency-key': `test-${Date.now()}-${index}-${Math.random()}` } // Chave única para cada requisição
             })
         );
 

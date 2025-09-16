@@ -7,6 +7,7 @@ const database = require('./config/database');
 const ClienteController = require('./controllers/ClienteController');
 const ClienteService = require('./services/ClienteService');
 const ClienteRepository = require('./repositories/ClienteRepository');
+const idempotencyMiddleware = require('./middlewares/idempotencyMiddleware');
 
 const app = express();
 
@@ -14,6 +15,7 @@ const app = express();
 app.use(express.json());
 app.use(helmet());
 app.use(cors());
+app.use(idempotencyMiddleware);
 
 // Injeção de dependências
 const clienteRepository = new ClienteRepository(database.getInstance());

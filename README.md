@@ -46,6 +46,8 @@ curl -X POST http://localhost:8080/clientes -H "Content-Type: application/json" 
 )
 
 npm test
+ou 
+node concurrent-transactions.test.js
 
 
 
