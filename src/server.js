@@ -2,6 +2,7 @@ const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
 const { body } = require('express-validator');
+const rateLimiter = require('./middlewares/RateLimiter');
 
 const database = require('./config/database');
 const ClienteController = require('./controllers/ClienteController');
@@ -15,6 +16,7 @@ const app = express();
 app.use(express.json());
 app.use(helmet());
 app.use(cors());
+app.use(rateLimiter);
 app.use(idempotencyMiddleware);
 
 // Injeção de dependências

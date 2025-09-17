@@ -91,9 +91,7 @@ Essa abordagem torna operações inerentemente não idempotentes, como `POST`, s
 
 ### Middlewares de Segurança e Validação
 A segurança da API é tratada como uma estratégia de "defesa em profundidade", onde múltiplas camadas de proteção trabalham em conjunto.
-- **`ErrorHandler`**: Centraliza o tratamento de erros, evitando o vazamento de informações sensíveis (*stack traces*) em produção e garantindo respostas de erro padronizadas e seguras.
 - **`RateLimiter`**: Implementa uma limitação de taxa de requisições customizada (100 requisições por IP a cada 15 minutos) para mitigar ataques de negação de serviço (DoS) e de força bruta.
-- **`ValidationMiddleware`**: Utiliza o `express-validator` para validar e sanitizar rigorosamente todos os dados de entrada, formando a primeira linha de defesa contra ataques de **SQL Injection** e **XSS**.
 - **`IdempotencyMiddleware`**: Previne o processamento duplicado de requisições que modificam dados, garantindo a consistência e a integridade do sistema em cenários de falhas de rede ou retentativas do cliente.
 
 A criação desses middlewares demonstra uma mentalidade focada em resiliência operacional e segurança, antecipando desafios do mundo real que vão além da simples implementação de funcionalidades.
@@ -169,6 +167,7 @@ Para validar a robustez da aplicação, especialmente a solução de concorrênc
    ou para o teste de concorrência específico:
    ```bash
    node concurrent-transactions.test.js
+   node idempotency.test.js
    ```
 
 Você também pode interagir com a API usando `curl`. Exemplo para criar um cliente:
@@ -185,7 +184,7 @@ curl -X POST http://localhost:8080/clientes -H "Content-Type: application/json" 
 Para transformar este projeto de um protótipo local em um serviço de produção capaz de suportar 5.000 usuários simultâneos, foi projetada uma arquitetura *cloud-native* na AWS. Esta arquitetura aborda diretamente as limitações da implementação local (como o uso do SQLite e a execução em um único processo) e introduz alta disponibilidade, escalabilidade e segurança robusta.
 
 ### Arquitetura AWS Proposta
-![Arquitetura AWS](img/v2DesenhoSolucaoAPI.drawio.png)
+![Arquitetura AWS](img/v3DesenhoSolucaoAPI.drawio.png)
 
 ### Serviços AWS Utilizados e Finalidade
 
